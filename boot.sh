@@ -1,28 +1,15 @@
 set -e
 
-ascii_art='________                  __        ___.
-\_____  \   _____ _____  |  | ____ _\_ |__
- /   |   \ /     \\__   \ |  |/ /  |  \ __ \
-/    |    \  Y Y  \/ __ \|    <|  |  / \_\ \
-\_______  /__|_|  (____  /__|_ \____/|___  /
-        \/      \/     \/     \/         \/
-'
-
-echo -e "$ascii_art"
-echo "=> Omakub is for fresh Ubuntu 24.04 installations only!"
-echo -e "\nBegin installation (or abort with ctrl+c)..."
+GIT_REPO="https://github.com/edueo/ubuntu2204-setup"
+GIT_DEST="~/.local/share/ubuntu2204-setup"
+INSTALL_SCRIPT="~/.local/share/ubuntu2204-setup/install.sh"
 
 sudo apt-get update >/dev/null
 sudo apt-get install -y git >/dev/null
 
-echo "Cloning Omakub..."
-rm -rf ~/.local/share/omakub
-git clone https://github.com/basecamp/omakub.git ~/.local/share/omakub >/dev/null
-if [[ $OMAKUB_REF != "master" ]]; then
-	cd ~/.local/share/omakub
-	git fetch origin "${OMAKUB_REF:-stable}" && git checkout "${OMAKUB_REF:-stable}"
-	cd -
-fi
+echo "Cloning Ubuntu 22.04 setup"
+rm -rf $GIT_DEST
+git clone $GIT_REPO $GIT_DEST >/dev/null
 
 echo "Installation starting..."
-source ~/.local/share/omakub/install.sh
+source $INSTALL_SCRIPT
